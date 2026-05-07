@@ -5,7 +5,7 @@ export default function Register() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [nombre, setNombre] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [loading] = useState(false)
 
 const handleRegister = async () => {
   await supabase.auth.signOut()
