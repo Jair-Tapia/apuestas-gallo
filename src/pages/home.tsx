@@ -149,6 +149,14 @@ export default function Home() {
             setYaAposto(true)
             return
         }
+        setModalVisible(false)
+
+        setMiApuesta({
+            lado,
+            monto
+        })
+
+        setYaAposto(true)
 
         const { error } = await supabase.from("bets").insert({
             user_id: userData.user.id,
@@ -167,10 +175,9 @@ export default function Home() {
                 alert("Error al apostar")
             }
             return
+
         }
 
-        setYaAposto(true)
-        setModalVisible(false)
     }
     if (!fight) {
         return (
@@ -274,7 +281,9 @@ export default function Home() {
 
                         <p className="text-yellow-400 font-semibold">
                             Apostaste S/{miApuesta.monto} al{" "}
-                            {miApuesta.lado === "f1" ? "Gallo 1 🐔" : "Gallo 2 🐔"}
+                            {miApuesta.lado === "f1"
+                                ? `${fight.f1_nombre} 🐔`
+                                : `${fight.f2_nombre} 🐔`}
                         </p>
                     </div>
                 )}

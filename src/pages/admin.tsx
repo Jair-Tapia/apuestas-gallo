@@ -382,31 +382,36 @@ export default function Admin() {
                     <h2 className="text-yellow-400 font-semibold mb-4">
                         Control de pelea
                     </h2>
-                    <div className="mb-4">
-                        <label className="block text-sm text-yellow-400 mb-1">
-                            Link del stream
-                        </label>
-
-                        <input
-                            className="w-full p-2 rounded bg-black border border-yellow-500 text-white"
-                            placeholder="https://youtube.com/watch?v=..."
-                            value={streamUrl}
-                            onChange={(e) => setStreamUrl(e.target.value)}
-                        />
-                    </div>
                     {estado === "pendiente" && (
+    <div className="flex flex-col gap-4">
 
-                        <button
-                            onClick={iniciarPelea}
-                            disabled={estado !== "pendiente"}
-                            className={`w-full py-2 rounded font-bold transition ${estado !== "pendiente"
-                                ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                                : "bg-green-500 text-black hover:bg-green-400"
-                                }`}
-                        >
-                            Iniciar pelea ▶️
-                        </button>
-                    )}
+        <div>
+            <label className="block text-sm text-yellow-400 mb-1">
+                Link del stream
+            </label>
+
+            <input
+                className="w-full p-2 rounded bg-black border border-yellow-500 text-white"
+                placeholder="https://youtube.com/watch?v=..."
+                value={streamUrl}
+                onChange={(e) => setStreamUrl(e.target.value)}
+            />
+        </div>
+
+        <button
+            onClick={iniciarPelea}
+            disabled={estado !== "pendiente"}
+            className={`w-full py-2 rounded font-bold transition ${
+                estado !== "pendiente"
+                    ? "bg-gray-700 text-gray-400 cursor-not-allowed"
+                    : "bg-green-500 text-black hover:bg-green-400"
+            }`}
+        >
+            Iniciar pelea ▶️
+        </button>
+
+    </div>
+)}
 
                     {estado === "en_vivo" && (
                         <div className="flex flex-col gap-3">
