@@ -8,6 +8,7 @@ export default function Admin() {
     const [fightId, setFightId] = useState<string | null>(null)
     const [estado, setEstado] = useState("pendiente")
     const [ganador, setGanador] = useState("")
+    const [streamUrl, setStreamUrl] = useState("")
     const [f1, setF1] = useState({
         nombre: "",
         peso: "",
@@ -110,12 +111,19 @@ export default function Admin() {
     useEffect(() => {
         cargarPelea()
     }, [])
+    const convertirYoutubeEmbed = (url: string) => {
+    const videoId = url.split("v=")[1]
+
+    if (!videoId) return url
+
+    return `https://www.youtube.com/embed/${videoId}`
+}
     const iniciarPelea = async () => {
         console.log("▶️ INICIANDO PELEA:", fightId)
 
         const { data, error } = await supabase
             .from("fights")
-            .update({ estado: "en_vivo" })
+            .update({ estado: "en_vivo", stream_url: convertirYoutubeEmbed(streamUrl) })
             .eq("id", fightId)
             .select()
 
@@ -244,61 +252,105 @@ export default function Admin() {
 
                 {/* INPUTS */}
                 <div className="grid grid-cols-2 gap-3">
-                    <input
-                        className="input"
-                        placeholder="Nombre"
-                        value={current.nombre}
-                        onChange={(e) =>
-                            setCurrent({ ...current, nombre: e.target.value })
-                        }
-                    />
 
-                    <input
-                        className="input"
-                        placeholder="Peso"
-                        value={current.peso}
-                        onChange={(e) =>
-                            setCurrent({ ...current, peso: e.target.value })
-                        }
-                    />
+                    <div>
+                        <label className="block text-sm text-yellow-400 mb-1">
+                            Nombre
+                        </label>
 
-                    <input
-                        className="input"
-                        placeholder="Raza"
-                        value={current.raza}
-                        onChange={(e) =>
-                            setCurrent({ ...current, raza: e.target.value })
-                        }
-                    />
+                        <input
+                            className="input w-full"
+                            placeholder="Nombre"
+                            value={current.nombre}
+                            onChange={(e) =>
+                                setCurrent({ ...current, nombre: e.target.value })
+                            }
+                        />
+                    </div>
 
-                    <input
-                        className="input"
-                        type="number"
-                        placeholder="Victorias"
-                        value={current.victorias}
-                        onChange={(e) =>
-                            setCurrent({ ...current, victorias: Number(e.target.value) })
-                        }
-                    />
+                    <div>
+                        <label className="block text-sm text-yellow-400 mb-1">
+                            Peso
+                        </label>
 
-                    <input
-                        className="input"
-                        type="number"
-                        placeholder="Derrotas"
-                        value={current.derrotas}
-                        onChange={(e) =>
-                            setCurrent({ ...current, derrotas: Number(e.target.value) })
-                        }
-                    />
+                        <input
+                            className="input w-full"
+                            placeholder="Peso"
+                            value={current.peso}
+                            onChange={(e) =>
+                                setCurrent({ ...current, peso: e.target.value })
+                            }
+                        />
+                    </div>
 
-                    <input
-                        className="input"
-                        placeholder="URL imagen"
-                        value={current.imagen}
-                        onChange={(e) =>
-                            setCurrent({ ...current, imagen: e.target.value })
-                        }
-                    />
+                    <div>
+                        <label className="block text-sm text-yellow-400 mb-1">
+                            Raza
+                        </label>
+
+                        <input
+                            className="input w-full"
+                            placeholder="Raza"
+                            value={current.raza}
+                            onChange={(e) =>
+                                setCurrent({ ...current, raza: e.target.value })
+                            }
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-yellow-400 mb-1">
+                            Victorias
+                        </label>
+
+                        <input
+                            className="input w-full"
+                            type="number"
+                            placeholder="Victorias"
+                            value={current.victorias}
+                            onChange={(e) =>
+                                setCurrent({
+                                    ...current,
+                                    victorias: Number(e.target.value)
+                                })
+                            }
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-yellow-400 mb-1">
+                            Derrotas
+                        </label>
+
+                        <input
+                            className="input w-full"
+                            type="number"
+                            placeholder="Derrotas"
+                            value={current.derrotas}
+                            onChange={(e) =>
+                                setCurrent({
+                                    ...current,
+                                    derrotas: Number(e.target.value)
+                                })
+                            }
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-yellow-400 mb-1">
+                            URL imagen
+                        </label>
+
+                        <input
+                            className="input w-full"
+                            placeholder="URL imagen"
+                            value={current.imagen}
+                            onChange={(e) =>
+                                setCurrent({ ...current, imagen: e.target.value })
+                            }
+                        />
+                    </div>
+
                 </div>
 
                 {/* BOTÓN CREAR */}
@@ -330,8 +382,20 @@ export default function Admin() {
                     <h2 className="text-yellow-400 font-semibold mb-4">
                         Control de pelea
                     </h2>
+                    <div className="mb-4">
+                        <label className="block text-sm text-yellow-400 mb-1">
+                            Link del stream
+                        </label>
 
+                        <input
+                            className="w-full p-2 rounded bg-black border border-yellow-500 text-white"
+                            placeholder="https://youtube.com/watch?v=..."
+                            value={streamUrl}
+                            onChange={(e) => setStreamUrl(e.target.value)}
+                        />
+                    </div>
                     {estado === "pendiente" && (
+
                         <button
                             onClick={iniciarPelea}
                             disabled={estado !== "pendiente"}

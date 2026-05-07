@@ -169,7 +169,6 @@ export default function Home() {
             return
         }
 
-        alert("Apuesta realizada 💸")
         setYaAposto(true)
         setModalVisible(false)
     }
@@ -205,7 +204,7 @@ export default function Home() {
                 <div className="flex justify-center mb-6">
                     <iframe
                         className="w-full max-w-xl aspect-video rounded-lg border border-yellow-500"
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        src={fight.stream_url}
                         allowFullScreen
                     />
                 </div>
