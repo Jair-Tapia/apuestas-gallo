@@ -156,7 +156,15 @@ export default function Home() {
             monto
         })
 
-        setYaAposto(true)
+        if (lado === "f1") {
+            setTotalF1(prev => prev + monto)
+            setCountF1(prev => prev + 1)
+        } else {
+            setTotalF2(prev => prev + monto)
+            setCountF2(prev => prev + 1)
+        }
+
+        setModalVisible(false)
 
         const { error } = await supabase.from("bets").insert({
             user_id: userData.user.id,
