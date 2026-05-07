@@ -14,7 +14,6 @@ export default function Login() {
     })
 
     if (error) alert(error.message)
-    else alert("Login exitoso 🚀")
   }
 
   const handleRegister = async () => {
@@ -36,7 +35,6 @@ export default function Login() {
       })
     }
 
-    alert("Usuario registrado 🎉")
     setIsRegister(false)
   }
 

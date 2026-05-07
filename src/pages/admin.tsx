@@ -58,7 +58,7 @@ export default function Admin() {
             .from("fights")
             .insert(payload)
             .select()
-            .single()
+            .maybeSingle()
 
         console.log("📦 RESPONSE DATA:", data)
         console.log("❌ ERROR:", error)
@@ -78,7 +78,7 @@ export default function Admin() {
             .select("*")
             .order("created_at", { ascending: false })
             .limit(1)
-            .single()
+            .maybeSingle()
 
         console.log("📦 PELEA:", data)
         console.log("❌ ERROR:", error)
@@ -136,7 +136,7 @@ export default function Admin() {
                 estado: "finalizado"
             })
             .eq("id", fightId)
-
+        setEstado("finalizado")
         // 2. traer apuestas
         const { data: bets } = await supabase
             .from("bets")
@@ -186,16 +186,6 @@ export default function Admin() {
         }
 
         console.log("🔥 CALCULO TERMINADO")
-
-        {
-            estado === "finalizado" && (
-                <div className="mt-4 text-center">
-                    <p className="text-yellow-400 font-bold text-lg">
-                        🏆 Ganador: {ganador === "f1" ? f1.nombre : f2.nombre}
-                    </p>
-                </div>
-            )
-        }
 
     }
     const resetearPanel = () => {

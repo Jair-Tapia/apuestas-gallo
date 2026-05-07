@@ -51,7 +51,7 @@ function App() {
       .from("profiles")
       .select("role")
       .eq("id", userId)
-      .single()
+      .maybeSingle()
 
     console.log("📦 ROLE DATA:", data)
     console.log("❌ ROLE ERROR:", error)

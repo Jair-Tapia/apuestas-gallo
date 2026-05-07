@@ -16,6 +16,28 @@ export default function Home() {
     const [countF1, setCountF1] = useState(0)
     const [countF2, setCountF2] = useState(0)
     const [miApuesta, setMiApuesta] = useState<any>(null)
+    const [nombreUsuario, setNombreUsuario] = useState("")
+
+    const cargarUsuario = async () => {
+        const { data: userData } = await supabase.auth.getUser()
+
+        if (!userData.user) return
+
+        const { data } = await supabase
+            .from("profiles")
+            .select("nombre")
+            .eq("id", userData.user.id)
+            .single()
+
+        if (data) {
+            setNombreUsuario(data.nombre)
+        }
+    }
+
+    useEffect(() => {
+        cargarPelea()
+        cargarUsuario()
+    }, [])
     const cargarApuestas = async (fightId: string) => {
         const { data } = await supabase
             .from("bets")
@@ -164,10 +186,12 @@ export default function Home() {
 
             {/* HEADER */}
             <div className="flex justify-between items-center mb-3">
-                <h1 className="text-xl md:text-2xl font-bold text-yellow-400">
+                <p className="text-xl md:text-3xl text-gray-300 font-medium">
+                    Bienvenido, <span className="text-xl md:text-3xl font-bold text-yellow-400">{nombreUsuario}</span>
+                </p>
+                <h1 className="left-1/2 -translate-x-1/2 text-2xl md:text-3xl font-bold text-yellow-400">
                     Pelea 🔥
                 </h1>
-
                 <button
                     onClick={() => setMostrarHistorial(!mostrarHistorial)}
                     className="border border-yellow-500 text-yellow-400 px-3 py-1 rounded hover:bg-yellow-500/10 transition"
