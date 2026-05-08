@@ -2,8 +2,8 @@ type Props = {
   nombre: string
   peso: string
   raza: string
-  victorias: number
-  derrotas: number
+  victorias: number | ""
+  derrotas: number | ""
   imagen: string
   total?: number
   count?: number

@@ -4,6 +4,18 @@ html, body, #root {
   margin: 0;
   background-color: black;
 }
+
+/* Chrome, Safari, Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 :root {
   --text: #6b6375;
   --text-h: #08060d;

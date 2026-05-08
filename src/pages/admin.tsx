@@ -13,8 +13,8 @@ export default function Admin() {
         nombre: "",
         peso: "",
         raza: "",
-        victorias: 0,
-        derrotas: 0,
+        victorias: "" as number | "",
+        derrotas: "" as number | "",
         imagen: ""
     })
 
@@ -22,8 +22,8 @@ export default function Admin() {
         nombre: "",
         peso: "",
         raza: "",
-        victorias: 0,
-        derrotas: 0,
+        victorias: "" as number | "",
+        derrotas: "" as number | "",
         imagen: ""
     })
 
@@ -93,8 +93,8 @@ export default function Admin() {
                 nombre: data.f1_nombre || "",
                 peso: data.f1_peso || "",
                 raza: data.f1_raza || "",
-                victorias: data.f1_victorias || 0,
-                derrotas: data.f1_derrotas || 0,
+                victorias: data.f1_victorias || "",
+                derrotas: data.f1_derrotas || "",
                 imagen: data.f1_imagen || ""
             })
 
@@ -102,8 +102,8 @@ export default function Admin() {
                 nombre: data.f2_nombre || "",
                 peso: data.f2_peso || "",
                 raza: data.f2_raza || "",
-                victorias: data.f2_victorias || 0,
-                derrotas: data.f2_derrotas || 0,
+                victorias: data.f2_victorias || "",
+                derrotas: data.f2_derrotas || "",
                 imagen: data.f2_imagen || ""
             })
         }
@@ -112,12 +112,12 @@ export default function Admin() {
         cargarPelea()
     }, [])
     const convertirYoutubeEmbed = (url: string) => {
-    const videoId = url.split("v=")[1]
+        const videoId = url.split("v=")[1]
 
-    if (!videoId) return url
+        if (!videoId) return url
 
-    return `https://www.youtube.com/embed/${videoId}`
-}
+        return `https://www.youtube.com/embed/${videoId}`
+    }
     const iniciarPelea = async () => {
         console.log("▶️ INICIANDO PELEA:", fightId)
 
@@ -206,8 +206,8 @@ export default function Admin() {
             nombre: "",
             peso: "",
             raza: "",
-            victorias: 0,
-            derrotas: 0,
+            victorias: "",
+            derrotas: "",
             imagen: ""
         })
 
@@ -215,8 +215,8 @@ export default function Admin() {
             nombre: "",
             peso: "",
             raza: "",
-            victorias: 0,
-            derrotas: 0,
+            victorias: "",
+            derrotas: "",
             imagen: ""
         })
 
@@ -224,8 +224,8 @@ export default function Admin() {
             nombre: "",
             peso: "",
             raza: "",
-            victorias: 0,
-            derrotas: 0,
+            victorias: "",
+            derrotas: "",
             imagen: ""
         })
 
@@ -311,7 +311,9 @@ export default function Admin() {
                             onChange={(e) =>
                                 setCurrent({
                                     ...current,
-                                    victorias: Number(e.target.value)
+                                    victorias: e.target.value === ""
+                                        ? ""
+                                        : Number(e.target.value)
                                 })
                             }
                         />
@@ -383,35 +385,34 @@ export default function Admin() {
                         Control de pelea
                     </h2>
                     {estado === "pendiente" && (
-    <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4">
 
-        <div>
-            <label className="block text-sm text-yellow-400 mb-1">
-                Link del stream
-            </label>
+                            <div>
+                                <label className="block text-sm text-yellow-400 mb-1">
+                                    Link del stream
+                                </label>
 
-            <input
-                className="w-full p-2 rounded bg-black border border-yellow-500 text-white"
-                placeholder="https://youtube.com/watch?v=..."
-                value={streamUrl}
-                onChange={(e) => setStreamUrl(e.target.value)}
-            />
-        </div>
+                                <input
+                                    className="w-full p-2 rounded bg-black border border-yellow-500 text-white"
+                                    placeholder="https://youtube.com/watch?v=..."
+                                    value={streamUrl}
+                                    onChange={(e) => setStreamUrl(e.target.value)}
+                                />
+                            </div>
 
-        <button
-            onClick={iniciarPelea}
-            disabled={estado !== "pendiente"}
-            className={`w-full py-2 rounded font-bold transition ${
-                estado !== "pendiente"
-                    ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                    : "bg-green-500 text-black hover:bg-green-400"
-            }`}
-        >
-            Iniciar pelea ▶️
-        </button>
+                            <button
+                                onClick={iniciarPelea}
+                                disabled={estado !== "pendiente"}
+                                className={`w-full py-2 rounded font-bold transition ${estado !== "pendiente"
+                                    ? "bg-gray-700 text-gray-400 cursor-not-allowed"
+                                    : "bg-green-500 text-black hover:bg-green-400"
+                                    }`}
+                            >
+                                Iniciar pelea ▶️
+                            </button>
 
-    </div>
-)}
+                        </div>
+                    )}
 
                     {estado === "en_vivo" && (
                         <div className="flex flex-col gap-3">

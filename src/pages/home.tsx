@@ -155,6 +155,7 @@ export default function Home() {
             lado,
             monto
         })
+        setYaAposto(true)
 
         if (lado === "f1") {
             setTotalF1(prev => prev + monto)
@@ -199,19 +200,33 @@ export default function Home() {
         <div className="bg-black text-white px-4 md:px-6 pb-6">
 
             {/* HEADER */}
-            <div className="flex justify-between items-center mb-3">
-                <p className="text-xl md:text-3xl text-gray-300 font-medium">
-                    Bienvenido, <span className="text-xl md:text-3xl font-bold text-yellow-400">{nombreUsuario}</span>
-                </p>
-                <h1 className="left-1/2 -translate-x-1/2 text-2xl md:text-3xl font-bold text-yellow-400">
+            <div className="flex flex-col md:flex-row items-center mb-3">
+
+                {/* IZQUIERDA */}
+                <div className="flex-1">
+                    <p className="text-xl md:text-3xl text-gray-300 font-medium">
+                        Bienvenido,{" "}
+                        <span className="text-xl md:text-3xl font-bold text-yellow-400">
+                            {nombreUsuario}
+                        </span>
+                    </p>
+                </div>
+
+                {/* CENTRO */}
+                <h1 className="text-2xl md:text-3xl font-bold text-yellow-400">
                     Pelea 🔥
                 </h1>
-                <button
-                    onClick={() => setMostrarHistorial(!mostrarHistorial)}
-                    className="border border-yellow-500 text-yellow-400 px-3 py-1 rounded hover:bg-yellow-500/10 transition"
-                >
-                    🔔
-                </button>
+
+                {/* DERECHA */}
+                <div className="flex-1 flex justify-end mt-2 md:mt-0">
+                    <button
+                        onClick={() => setMostrarHistorial(!mostrarHistorial)}
+                        className="border border-yellow-500 text-yellow-400 px-3 py-1 rounded hover:bg-yellow-500/10 transition"
+                    >
+                        🔔
+                    </button>
+                </div>
+
             </div>
 
             {/* 🎥 VIDEO */}
